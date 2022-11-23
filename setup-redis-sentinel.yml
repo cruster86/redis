@@ -15,24 +15,24 @@
 #        name: redis-sentinel
 #        state: restarted
   tasks:
-#    - name: Add redis signing key
-#      apt_key:
-#        url: https://packages.redis.io/gpg
-#        keyring: /usr/share/keyrings/redis-archive-keyring.gpg
-#    - name: Add redis repo
-#      apt_repository:
-#        repo: "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb {{ #ansible_distribution_release }} main"
-#        state: present
-#    - name: Install redis-server
-#      apt:
-#        name: redis-server
-#        update_cache: yes
-#    - name: Install redis-sentinel
-#      apt:
-#        name: redis-sentinel
-#    - name: Wait Redis Started
-#      wait_for:
-#        port: 6379
+    - name: Add redis signing key
+      apt_key:
+        url: https://packages.redis.io/gpg
+        keyring: /usr/share/keyrings/redis-archive-keyring.gpg
+    - name: Add redis repo
+      apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb {{ ansible_distribution_release }} main"
+        state: present
+    - name: Install redis-server
+      apt:
+        name: redis-server
+        update_cache: yes
+    - name: Install redis-sentinel
+      apt:
+        name: redis-sentinel
+    - name: Wait Redis Started
+      wait_for:
+        port: 6379
     - name: Enable service redis-server and ensure it is not masked
       ansible.builtin.systemd:
         name: redis-server
