@@ -4,7 +4,7 @@ stages:
 ### deploy playbook with manual run
 deploy:
   stage: deploy
-  image: registry.gitlab.com/torese/docker-ansible
+  image: registry.sirius.online/infra/redis/docker-ansible:v0.0.1
   before_script:
   - ansible --version
   - mkdir secret
