@@ -43,19 +43,19 @@
         name: redis-sentinel
         enabled: yes
         masked: no
-#    - name: Update redis.conf
-#      lineinfile:
-#        path: /etc/redis/redis.conf
-#        regexp: "^{{ item.split(':')[0].strip() | regex_escape() }}.*$"
-#        line: "{{ item.split(':')[0].strip() }} {{ item.split(':')[1].strip() }}"
-#        state: present
-#      loop: "{{ lookup('template', './redis.conf.j2').splitlines() | reject('match', '^$') | reject('match', '^#.*') | #list }}"
-#      register: redis_conf_file
-#    - name: restart redis
-#      when: redis_conf_file is changed
-#      service:
-#        name: redis-server
-#        state: restarted
+    - name: Update redis.conf
+      lineinfile:
+        path: /etc/redis/redis.conf
+        regexp: "^{{ item.split(':')[0].strip() | regex_escape() }}.*$"
+        line: "{{ item.split(':')[0].strip() }} {{ item.split(':')[1].strip() }}"
+        state: present
+      loop: "{{ lookup('template', './redis.conf.j2').splitlines() | reject('match', '^$') | reject('match', '^#.*') | list }}"
+      register: redis_conf_file
+    - name: restart redis
+      when: redis_conf_file is changed
+      service:
+        name: redis-server
+        state: restarted
     - name: Update sentinel.conf
       lineinfile:
         path: /etc/redis/sentinel.conf
