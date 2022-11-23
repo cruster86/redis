@@ -1,15 +1,19 @@
+---
+
+image: registry.sirius.online/infra/redis/docker-ansible:v0.0.1
+
+before_script:
+  - ansible --version
+  - mkdir secret
+  - echo "$RUNNER_PRIVATE_KEY" > secret/ansible.key
+  - export ANSIBLE_HOST_KEY_CHECKING=False
+
 stages:
   - deploy
 
 ### deploy playbook with manual run
 deploy:
   stage: deploy
-  image: registry.sirius.online/infra/redis/docker-ansible:v0.0.1
-  before_script:
-  - ansible --version
-  - mkdir secret
-  - echo "$RUNNER_PRIVATE_KEY" > secret/ansible.key
-  - export ANSIBLE_HOST_KEY_CHECKING=False
   script:
     - ansible all -m ping -v --private-key secret/ansible.key --u ubuntu -i inventori.ini
   tags:
