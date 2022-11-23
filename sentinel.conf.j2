@@ -2,7 +2,7 @@
 dir: "/var/lib/redis"
 sentinel monitor mymaster: {{ hostvars[host]['ansible_host'] }} 6379 2
 sentinel down-after-milliseconds mymaster: 10000
-sentinel failover-timeout mymaster: 180000
+sentinel failover-timeout mymaster: 18000
 maxclients: 10000
 sentinel parallel-syncs mymaster: 5
 protected-mode: no
