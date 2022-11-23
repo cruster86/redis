@@ -1,23 +1,25 @@
-#---
-#image: djerfy/gitlab-ci-ansible:latest
-#
-#stages:
-#  - testing
-#  - deploy
-#
-### prepare for plays
-#before_script:
-#  - ansible --version
-#  - mkdir secret
-#  - echo "$RUNNER_PRIVATE_KEY" > secret/ansible.key
-#  - chmod 400 secret/ansible.key
-#  - export ANSIBLE_HOST_KEY_CHECKING=False
+---
+## use image with pre-installed ansible
+image: registry.gitlab.com/torese/docker-ansible
 
-#### deploy playbook with manual run
-#deploy:
-#  stage: deploy
-#  tags:
-#    - ansible
-#  script:
-#    - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventori.ini setup-redis-sentinel.yml
-#  when: manual
+stages:
+  - deploy
+
+## prepare for plays
+before_script:
+  - ansible --version
+  - mkdir secret
+  - echo "$RUNNER_PRIVATE_KEY" > secret/ansible.key
+  - export ANSIBLE_HOST_KEY_CHECKING=False
+
+### deploy playbook with manual run
+deploy:
+  stage: deploy
+  tags:
+    - ansible
+  script:
+    - ansible all -m ping -v --private-key secret/ansible.key --u ubuntu -i inventori.ini
+  when: manual
+
+#   - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventori.ini setup-redis-sentinel.yml
+
