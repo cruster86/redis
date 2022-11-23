@@ -15,10 +15,8 @@ stages:
 deploy:
   stage: deploy
   script:
-    - ansible all -m ping -v --private-key secret/ansible.key --u ubuntu -i inventory.ini
+    - - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventori.ini setup-redis-sentinel.yml
+#    - ansible all -m ping -v --private-key secret/ansible.key --u ubuntu -i inventory.ini
   tags:
     - ansible
   when: manual
-
-#   - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventori.ini setup-redis-sentinel.yml
-
