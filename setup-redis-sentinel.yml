@@ -56,16 +56,16 @@
 #      service:
 #        name: redis-server
 #        state: restarted
-#    - name: Update sentinel.conf
-#      lineinfile:
-#        path: /etc/redis/sentinel.conf
-#        regexp: "^{{ item.split(':')[0].strip() | regex_escape() }}.*$"
-#        line: "{{ item.split(':')[0].strip() }} {{ item.split(':')[1].strip() }}"
-#        state: present
-#      loop: "{{ lookup('template', './sentinel.conf.j2').splitlines() | reject('match', '^$') | reject('match', '^#.*') | #list }}"
-#      register: sentinel_conf_file
-#    - name: restart sentinel
-#      when: sentinel_conf_file is changed
-#      service:
-#        name: redis-sentinel
-#        state: restarted
+    - name: Update sentinel.conf
+      lineinfile:
+        path: /etc/redis/sentinel.conf
+        regexp: "^{{ item.split(':')[0].strip() | regex_escape() }}.*$"
+        line: "{{ item.split(':')[0].strip() }} {{ item.split(':')[1].strip() }}"
+        state: present
+      loop: "{{ lookup('template', './sentinel.conf.j2').splitlines() | reject('match', '^$') | reject('match', '^#.*') | list }}"
+      register: sentinel_conf_file
+    - name: restart sentinel
+      when: sentinel_conf_file is changed
+      service:
+        name: redis-sentinel
+        state: restarted
