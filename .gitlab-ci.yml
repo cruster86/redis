@@ -15,7 +15,7 @@ stages:
 deploy:
   stage: deploy
   script:
-    - ansible all -m ping -v --private-key secret/ansible.key --u ubuntu -i inventori.ini
+    - ansible all -m ping -v --private-key secret/ansible.key --u ubuntu -i inventory.ini
   tags:
     - ansible
   when: manual
