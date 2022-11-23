@@ -5,11 +5,11 @@ Ansible Playbook to deploy a High Availability Redis with Sentinel
 ## Getting started
 
 1. Create 3 servers with public-key authentication
-2. Edit `inventory` file and replace `<SERVER_01_IP>`, `<SERVER_02_IP>` and `<SERVER_03_IP>` with the corresponding IP address for each server.
+2. Edit `inventory.ini` file and set `ansible_host=` with the corresponding IP address for each redis server.
 3. Run playbook `setup-redis-sentinel.yml`
 
     ```bash
-    ansible-playbook setup-redis-sentinel.yml -i inventory
+    ansible-playbook setup-redis-sentinel.yml -i inventory.ini
     ```
 
 ## Notice

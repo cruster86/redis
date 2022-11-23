@@ -1,7 +1,9 @@
 {% for host in vars['ansible_play_hosts_all'] if hostvars[host]['role'] == "master" %}
+data: /var/lib/redis
 sentinel monitor mymaster: {{ hostvars[host]['ansible_host'] }} 6379 2
-sentinel auth-pass mymaster: {{ REDIS_PASSWORD }}
-sentinel down-after-milliseconds mymaster: 5000
-sentinel failover-timeout mymaster: 60000
+sentinel down-after-milliseconds mymaster: 10000
+sentinel failover-timeout mymaster: 180000
+maxclients: 10000
+sentinel parallel-syncs mymaster: 5
 protected-mode: no
 {% endfor %}
