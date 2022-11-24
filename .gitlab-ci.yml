@@ -1,7 +1,9 @@
 ---
 
+### use fedora image with pre-installed ansible and python
 image: registry.sirius.online/infra/redis/docker-ansible:v0.0.1
 
+### copy runner's private key into image
 before_script:
   - ansible --version
   - mkdir secret
@@ -15,8 +17,7 @@ stages:
 deploy:
   stage: deploy
   script:
-    - - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventory.ini setup-redis-sentinel.yml -vv
-#    - ansible all -m ping -v --private-key secret/ansible.key --u ubuntu -i inventory.ini
+    - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventory.ini setup-redis-sentinel.yml -vv
   tags:
     - ansible
   when: manual
