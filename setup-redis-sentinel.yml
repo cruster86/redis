@@ -69,3 +69,12 @@
       service:
         name: redis-sentinel
         state: restarted
+    - name: change /etc/redis ownership
+      file:
+        path: /etc/redis
+        state: directory
+        recurse: yes
+        owner: redis
+        group: redis
+      become: true
+
