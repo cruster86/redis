@@ -10,6 +10,7 @@ min-replicas-to-write: 1
 rdbchecksum: yes
 rdbcompression: yes
 repl-diskless-sync: yes
+protected-mode: no
 {% if hostvars[inventory_hostname]['role'] != "master" %}
 {% for host in vars['ansible_play_hosts_all'] if hostvars[host]['role'] == "master" %}
 replicaof: {{ hostvars[host]['ansible_host'] }} 6379
