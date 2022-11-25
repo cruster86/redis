@@ -17,7 +17,7 @@ stages:
 deploy:
   stage: deploy
   script:
-    - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventory.ini setup-redis-sentinel.yml -v
+    - ansible-playbook --private-key secret/ansible.key --user ubuntu -i inventory.ini setup-redis-sentinel.yml
   tags:
     - ansible
   when: manual
