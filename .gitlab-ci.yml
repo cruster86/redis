@@ -1,9 +1,9 @@
 ---
 
-### use fedora image with pre-installed ansible and python
+### use fedora image with pre-installed ansible and python 
 image: registry.sirius.online/infra/redis/docker-ansible:v0.0.1
 
-### copy runner's private key into image
+### copy runner's private key into image 
 before_script:
   - ansible --version
   - mkdir secret
@@ -13,7 +13,7 @@ before_script:
 stages:
   - deploy
 
-### deploy playbook with manual run
+### deploy playbook with manual run 
 deploy:
   stage: deploy
   script:
